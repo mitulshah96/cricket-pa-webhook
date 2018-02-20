@@ -1,0 +1,13 @@
+version: "3"
+services:
+  pawebhook:
+    image: docker-test.artifactory.amwaters.com/amwater/artifactory:latest
+    container_name: pawebhook
+    labels:
+       app: pawebhook
+    ports:
+      - "4004:4004"
+    volumes:
+      - data:/usr/src/app/data
+      - log:/logs
+      - secrets:/secrets

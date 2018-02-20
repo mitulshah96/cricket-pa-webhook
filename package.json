@@ -1,0 +1,33 @@
+{
+  "name": "PA-Webhook",
+  "version": "1.01.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "pm2-docker admin.pm2.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.149.0",
+    "axios": "^0.17.1",
+    "bluebird": "^3.4.7",
+    "body-parser": "^1.18.2",
+    "compression": "^1.6.2",
+    "express": "^4.16.2",
+    "helmet": "^3.4.0",
+    "i": "^0.3.6",
+    "jsonwebtoken": "^7.4.3",
+    "moment": "^2.19.4",
+    "mongoose": "^4.8.4",
+    "morgan": "~1.7.0",
+    "request": "^2.83.0",
+    "serve-favicon": "~2.3.2",
+    "ssml-builder": "^0.4.0",
+    "stream": "0.0.2",
+    "swagger-jsdoc": "^1.9.7",
+    "swagger-tools": "^0.10.3"
+  }
+}
