@@ -27,6 +27,7 @@ module.exports = {
       'navigate_home',
 
       // SEARCH / UNKNOWN-INPUT
+<<<<<<< HEAD
       'default_fallback_intent',
 
       //============//
@@ -53,14 +54,21 @@ module.exports = {
       'alliances_parterships',
       'accion_labs_locations',
       'corporate_socail_resp'
+=======
+      'default_fallback_intent'
+>>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
     ],
     intents: {
       //================================================================================//
       //================================ ALEXA START ===================================//
       //================================================================================//
       search_widget: {
+<<<<<<< HEAD
         urls: [
           {
+=======
+        urls: [{
+>>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
             url: `${config.base_url}/${config.service_url}/o365/user/profile`,
             method: 'GET',
             parameters: {
@@ -141,7 +149,13 @@ module.exports = {
       //=====================================//
 
       email_widget_search: {
+<<<<<<< HEAD
         url: `${config.base_url}/${config.service_url}/o365/search/mail`,
+=======
+        url: `${config.base_url}/${
+          config.service_url
+        }/o365/search/mail`,
+>>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
         method: 'POST',
         parameters: {
           type: 'body',
@@ -197,8 +211,12 @@ module.exports = {
       //===================================//
 
       news_widget: {
+<<<<<<< HEAD
         urls: [
           {
+=======
+        urls: [{
+>>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
             url: `${config.base_url}/${config.service_url}/o365/user/profile`,
             method: 'GET',
             parameters: {
@@ -272,9 +290,53 @@ module.exports = {
       //============== SEARCH / UNKNOWN-INPUT ==============//
       //====================================================//
       default_fallback_intent: {
+<<<<<<< HEAD
         callback: {
           dialogflow: 'createDefaultObject'
         }
+=======
+        urls: [{
+            url: `${config.base_url}/${config.service_url}/o365/user/profile`,
+            method: 'GET',
+            parameters: {
+              type: 'params',
+              value: {}
+            },
+            direct: true,
+            headers: {}
+          },
+          {
+            url: `${config.base_url}/searchms/search/search?query=`,
+            method: 'GET',
+            parameters: {
+              type: 'params',
+              value: {}
+            },
+            headers: {},
+            intercept: {
+              dialogflow: 'handleSearchParams'
+            },
+            callback: {
+              dialogflow: 'createSearchObject'
+            }
+          }
+        ]
+        // url: `${
+        //   envConfig.PA_service.admin[env].base_url
+        // }searchms/search/search?query=`,
+        // method: "GET",
+        // parameters: {
+        //   type: "params",
+        //   value: {}
+        // },
+        // headers: {},
+        // intercept: {
+        //   dialogflow: "handleSearchParams"
+        // },
+        // callback: {
+        //   dialogflow: "createSearchObject"
+        // }
+>>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
       },
 
       //===========================================//
@@ -284,11 +346,16 @@ module.exports = {
         callback: {
           dialogflow: 'createNavigateHomeObject'
         }
+<<<<<<< HEAD
       },
+=======
+      }
+>>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
 
       //================================================================================//
       //******************************* DIALOGFLOW END *********************************//
       //================================================================================//
+<<<<<<< HEAD
 
       //================================================================================//
       //================================ AIC START ===================================//
@@ -394,6 +461,8 @@ module.exports = {
           dialogflow: 'createCorporateObject'
         }
       }
+=======
+>>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
     },
     format: {
       dialogflow: {
@@ -414,4 +483,8 @@ module.exports = {
       }
     }
   }
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167

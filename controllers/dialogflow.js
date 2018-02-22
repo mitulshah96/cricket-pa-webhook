@@ -3,7 +3,10 @@ const EmailHelper = require('./helpers/email-helper');
 const NewsHelper = require('./helpers/news-helper');
 const CalendarHelper = require('./helpers/calendar-helper');
 const SearchHelper = require('./helpers/search-helper');
+<<<<<<< HEAD
 const AicHelper = require('./helpers/aic-helper');
+=======
+>>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
 
 const request = require('request');
 // var email;
@@ -17,7 +20,10 @@ class DialogFlow {
     this.news = new NewsHelper();
     this.calendar = new CalendarHelper();
     this.search = new SearchHelper();
+<<<<<<< HEAD
     this.aic = new AicHelper();
+=======
+>>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
   }
 
   //===================================//
@@ -180,6 +186,7 @@ class DialogFlow {
   //===================================//
   //***********************************//
   //===================================//
+<<<<<<< HEAD
 
   //===================================//
   //================= AIC =============//
@@ -250,6 +257,8 @@ class DialogFlow {
   async createDefaultObject() {
     return this.aic.getDefaultData();
   }
+=======
+>>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
 }
 
 module.exports = DialogFlow;

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 (function() {
+=======
+(function () {
+>>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
   'use strict';
   const envConfig = require('/secrets/pa_webhooks/envConfig');
   const express = require('express');
@@ -12,9 +16,16 @@
   const router = express.Router();
 
   const client_access_token =
+<<<<<<< HEAD
     `${
       envConfig.PA_service.admin[envConfig.environment].client_access_token
     }` || 'local';
+=======
+    `${envConfig.PA_service.admin[envConfig.environment].client_access_token}` ||
+    'local';
+
+
+>>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
 
   // =================================================================
   // ========================= Polly API ===============================
@@ -68,21 +79,36 @@
 
   router.post('/api/pams', (req, res) => {
     console.log('here');
+<<<<<<< HEAD
     // console.log(req.body);
     var queryBody = req.body;
     var queryData = JSON.stringify(queryBody);
 
     request(
       {
+=======
+    var queryBody = req.body;
+    var queryData = JSON.stringify(queryBody);
+
+    request({
+>>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
         method: 'POST',
         uri: 'https://api.dialogflow.com/v1/query?v=20150910',
         headers: {
           'Content-Type': 'application/json; charset=utf-8',
+<<<<<<< HEAD
           Authorization: 'Bearer f5c02716edf9479aaf2814a5f3dadf03'
         },
         body: queryData
       },
       function(err, response, body) {
+=======
+          Authorization: `Bearer f5c02716edf9479aaf2814a5f3dadf03`
+        },
+        body: queryData
+      },
+      function (err, response, body) {
+>>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
         //it works!
         if (err) {
           self.emit('error', err);
@@ -91,6 +117,7 @@
           const jsonData = JSON.parse(body);
           const result = jsonData.result;
 
+<<<<<<< HEAD
           // const dataToSend = {
           //   id: jsonData.id,
           //   query: result.resolvedQuery,
@@ -100,6 +127,15 @@
           // };
 
           // console.log(body);
+=======
+          const dataToSend = {
+            id: jsonData.id,
+            query: result.resolvedQuery,
+            parameters: result.parameters,
+            contexts: result.contexts,
+            fulfillment: result.fulfillment
+          };
+>>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
 
           res.send(result);
         }
@@ -467,8 +503,12 @@
     }
 
     try {
+<<<<<<< HEAD
       const result = await TokenModel.update(
         {
+=======
+      const result = await TokenModel.update({
+>>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
           UUID: UUID
         },
         query
@@ -614,4 +654,8 @@
   });
 
   module.exports = router;
+<<<<<<< HEAD
 })();
+=======
+})();
+>>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
