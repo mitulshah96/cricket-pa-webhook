@@ -1,95 +1,64 @@
-const envConfig = require('/secrets/pa_webhooks/envConfig');
+const envConfig = require("/secrets/pa_webhooks/envConfig");
 const env = envConfig.environment;
 const config = envConfig.PA_service.admin[env];
 
 module.exports = {
-  '59d9a2e8695293a55460c4d4': {
+  "59d9a2e8695293a55460c4d4": {
     allowed_intents: [
       // EMAIL
-      'email_widget',
-      'email_intent_yes',
-      'email_intent_no',
-      'email_read_cancel',
+      "email_widget",
+      "email_intent_yes",
+      "email_intent_no",
+      "email_read_cancel",
 
       // CALENDAR
-      'calendar_widget',
-      'calendar_read_yes',
-      'calendar_read_no',
-      'calendar_read_cancel',
+      "calendar_widget",
+      "calendar_read_yes",
+      "calendar_read_no",
+      "calendar_read_cancel",
 
       // NEWS
-      'news_widget',
-      'news_read_yes',
-      'news_read_no',
-      'news_read_cancel',
+      "news_widget",
+      "news_read_yes",
+      "news_read_no",
+      "news_read_cancel",
 
       // NAVIGATE HOME
-      'navigate_home',
+      "navigate_home",
 
       // SEARCH / UNKNOWN-INPUT
-      'default_fallback_intent',
+      "default_fallback_intent",
 
       //============//
       //=== AIC ===//
       //===========//
 
-      'about',
-      'show_more',
-      'solutions',
-      'services',
-      'blogs',
-      'company',
-      'contact',
-      'why_accion_labs',
-      'for_clients',
-      'for_employees',
-      'accion_story',
-      'about_accion_talent',
-      'accion_clients',
-      'start_up',
-      'enterprise_org',
-      'matured_product',
-      'growth_stage',
-      'alliances_parterships',
-      'accion_labs_locations',
-      'corporate_socail_resp'
+      "about",
+      "show_more",
+      "solutions",
+      "services",
+      "blogs",
+      "company",
+      "contact",
+      "why_accion_labs",
+      "for_clients",
+      "for_employees",
+      "accion_story",
+      "about_accion_talent",
+      "accion_clients",
+      "start_up",
+      "enterprise_org",
+      "matured_product",
+      "growth_stage",
+      "alliances_parterships",
+      "accion_labs_locations",
+      "corporate_socail_resp"
     ],
     intents: {
       //================================================================================//
       //================================ ALEXA START ===================================//
       //================================================================================//
-      search_widget: {
-        urls: [
-          {
-            url: `${config.base_url}/${config.service_url}/o365/user/profile`,
-            method: 'GET',
-            parameters: {
-              type: 'params',
-              value: {}
-            },
-            direct: true,
-            headers: {},
-            intercept: {
-              alexa: 'intercept_sample'
-            }
-          },
-          {
-            url: `${config.base_url}/searchms/search/search?query=`,
-            method: 'GET',
-            parameters: {
-              type: 'params',
-              value: {}
-            },
-            headers: {},
-            intercept: {
-              alexa: 'intercept_sample1'
-            },
-            callback: {
-              alexa: 'get_searchresults'
-            }
-          }
-        ]
-      },
+
       //================================================================================//
       //***************************** ALEXA END ****************************************//
       //================================================================================//
@@ -102,57 +71,55 @@ module.exports = {
       //============== EMAIL ==============//
       //===================================//
       email_widget: {
-        url: `${config.base_url}/${
-          config.service_url
-        }/o365/mail/offset/0/limit/10`,
-        method: 'POST',
-        parameters: {
-          type: 'body',
-          value: {}
-        },
-        headers: {},
-        intercept: {
-          dialogflow: 'handleEmailParams',
-          alexa: 'intercept_emails'
-        },
-        callback: {
-          dialogflow: 'createEmailObject',
-          alexa: 'get_emails'
-        }
+        urls: [
+          {
+            url: `https://www.googleapis.com/gmail/v1/users/me/profile`,
+            method: "GET",
+            parameters: {
+              type: "params",
+              value: {}
+            },
+            direct: true,
+            headers: {},
+            intercept: {
+              alexa: "intercept_email"
+            },
+            callback: {
+              alexa: "get_emailaddress_callback"
+            }
+          },
+          {
+            url: `https://prioriti.net/aicgateway/googleemail/default?maxResults=5&labels=INBOX`,
+            method: "GET",
+            parameters: {
+              type: "params",
+              value: {}
+            },
+            direct: true,
+            headers: {},
+            intercept: {
+              alexa: "intercept_get_email"
+              // dialogflow: "handleUserName"
+            },
+            callback: {
+              alexa: "get_emails"
+            }
+          }
+        ]
       },
       email_intent_yes: {
         callback: {
-          dialogflow: 'createEmailReadYesObject'
+          dialogflow: "createEmailReadYesObject"
         }
       },
       email_intent_no: {
         callback: {
-          dialogflow: 'createEmailReadNoObject'
+          dialogflow: "createEmailReadNoObject"
         }
       },
       email_read_cancel: {
         callback: {
-          dialogflow: 'createEmailReadCancelObject'
-        }
-      },
-
-      //=======================================//
-      //========Email Search===========//
-      //=====================================//
-
-      email_widget_search: {
-        url: `${config.base_url}/${config.service_url}/o365/search/mail`,
-        method: 'POST',
-        parameters: {
-          type: 'body',
-          value: {}
-        },
-        headers: {},
-        intercept: {
-          alexa: 'intercept_search_emails'
-        },
-        callback: {
-          alexa: 'get_search_emails'
+          dialogflow: "createEmailReadCancelObject"
         }
       },
 
@@ -160,35 +127,56 @@ module.exports = {
       //============== CALENDAR ==============//
       //======================================//
       calendar_widget: {
-        url: 'http://localhost:3000/events/calendar',
-        method: 'POST',
-        parameters: {
-          type: 'body',
-          value: {}
-        },
-        headers: {},
-        intercept: {
-          dialogflow: 'handleCalendarParams',
-          alexa: 'intercept_events'
-        },
-        callback: {
-          dialogflow: 'createCalendarObject',
-          alexa: 'get_events'
-        }
+        urls: [
+          {
+            url: `https://www.googleapis.com/gmail/v1/users/me/profile`,
+            method: "GET",
+            parameters: {
+              type: "params",
+              value: {}
+            },
+            direct: true,
+            headers: {},
+            intercept: {
+              alexa: "intercept_email"
+            },
+            callback: {
+              alexa: "get_emailaddress_callback"
+            }
+          },
+          {
+            url: `https://prioriti.net/aicgateway/googlecalendar/list?maxResults=10`,
+            method: "GET",
+            parameters: {
+              type: "params",
+              value: {}
+            },
+            direct: true,
+            headers: {},
+            intercept: {
+              alexa: "intercept_get_calendar",
+              dialogflow: "handleCalendarParams"
+            },
+            callback: {
+              alexa: "get_events",
+              dialogflow: "createCalendarObject"
+            }
+          }
+        ]
       },
       calendar_read_yes: {
         callback: {
-          dialogflow: 'createCalendarReadYesObject'
+          dialogflow: "createCalendarReadYesObject"
         }
       },
       calendar_read_no: {
         callback: {
-          dialogflow: 'createCalendarReadNoObject'
+          dialogflow: "createCalendarReadNoObject"
         }
       },
       calendar_read_cancel: {
         callback: {
-          dialogflow: 'createCalendarReadCancelObject'
+          dialogflow: "createCalendarReadCancelObject"
         }
       },
 
@@ -197,74 +185,35 @@ module.exports = {
       //===================================//
 
       news_widget: {
-        urls: [
-          {
-            url: `${config.base_url}/${config.service_url}/o365/user/profile`,
-            method: 'GET',
-            parameters: {
-              type: 'params',
-              value: {}
-            },
-            direct: true,
-            headers: {},
-            intercept: {
-              alexa: 'intercept_sample'
-              // dialogflow: "handleUserName"
-            }
-          },
-          {
-            url: `${
-              config.base_url
-            }/searchms/search/home/whatsimportanttoday?pageNumber=0&size=5&userId=`,
-            method: 'GET',
-            parameters: {
-              type: 'params',
-              value: {}
-            },
-            headers: {},
-            intercept: {
-              alexa: 'intercept_sample2',
-              dialogflow: 'handleNewsParams'
-            },
-            callback: {
-              dialogflow: 'createNewsObject',
-              alexa: 'get_news'
-            }
-          }
-        ]
+        url: `https://prioriti.net/aicgateway/googlenews/gfeeds?query=`,
+        method: "GET",
+        parameters: {
+          type: "params",
+          value: {}
+        },
+        headers: {},
+        intercept: {
+          alexa: "intercept_news",
+          dialogflow: "handleNewsParams"
+        },
+        callback: {
+          alexa: "get_news",
+          dialogflow: "createNewsObject"
+        }
       },
-
-      //   url: `${
-      //     envConfig.PA_service.admin[env].base_url
-      //   }searchms/search/home/whatsimportanttoday?userId=`,
-      //   method: "GET",
-      //   parameters: {
-      //     type: "params",
-      //     value: {}
-      //   },
-      //   headers: {},
-      //   intercept: {
-      //     // alexa: "intercept_sample2",
-      //     dialogflow: "handleNewsParams"
-      //   },
-      //   callback: {
-      //     dialogflow: "createNewsObject",
-      //     alexa: "get_news"
-      //   }
-      // },
       news_read_yes: {
         callback: {
-          dialogflow: 'createNewsReadYesObject'
+          dialogflow: "createNewsReadYesObject"
         }
       },
       news_read_no: {
         callback: {
-          dialogflow: 'createNewsReadNoObject'
+          dialogflow: "createNewsReadNoObject"
         }
       },
       news_read_cancel: {
         callback: {
-          dialogflow: 'createNewsReadCancelObject'
+          dialogflow: "createNewsReadCancelObject"
         }
       },
 
@@ -273,7 +222,7 @@ module.exports = {
       //====================================================//
       default_fallback_intent: {
         callback: {
-          dialogflow: 'createDefaultObject'
+          dialogflow: "createDefaultObject"
         }
       },
 
@@ -282,7 +231,7 @@ module.exports = {
       //==========================================//
       navigate_home: {
         callback: {
-          dialogflow: 'createNavigateHomeObject'
+          dialogflow: "createNavigateHomeObject"
         }
       },
 
@@ -296,118 +245,118 @@ module.exports = {
 
       about: {
         callback: {
-          dialogflow: 'createAboutObject'
+          dialogflow: "createAboutObject"
         }
       },
       show_more: {
         callback: {
-          dialogflow: 'createShowMoreObject'
+          dialogflow: "createShowMoreObject"
         }
       },
       solutions: {
         callback: {
-          dialogflow: 'createSolutionsObject'
+          dialogflow: "createSolutionsObject"
         }
       },
       services: {
         callback: {
-          dialogflow: 'createServicesObject'
+          dialogflow: "createServicesObject"
         }
       },
       blogs: {
         callback: {
-          dialogflow: 'createBlogsObject'
+          dialogflow: "createBlogsObject"
         }
       },
       company: {
         callback: {
-          dialogflow: 'createCompanyObject'
+          dialogflow: "createCompanyObject"
         }
       },
       contact: {
         callback: {
-          dialogflow: 'createContactObject'
+          dialogflow: "createContactObject"
         }
       },
       why_accion_labs: {
         callback: {
-          dialogflow: 'createWhyAccionObject'
+          dialogflow: "createWhyAccionObject"
         }
       },
       for_clients: {
         callback: {
-          dialogflow: 'createForClientObject'
+          dialogflow: "createForClientObject"
         }
       },
       for_employees: {
         callback: {
-          dialogflow: 'createForEmpObject'
+          dialogflow: "createForEmpObject"
         }
       },
       accion_story: {
         callback: {
-          dialogflow: 'createAccionStoryObject'
+          dialogflow: "createAccionStoryObject"
         }
       },
       about_accion_talent: {
         callback: {
-          dialogflow: 'createAccionTalentObject'
+          dialogflow: "createAccionTalentObject"
         }
       },
       accion_clients: {
         callback: {
-          dialogflow: 'createAccionClientObject'
+          dialogflow: "createAccionClientObject"
         }
       },
       start_up: {
         callback: {
-          dialogflow: 'createStartUpObject'
+          dialogflow: "createStartUpObject"
         }
       },
       enterprise_org: {
         callback: {
-          dialogflow: 'createEnterpriseObject'
+          dialogflow: "createEnterpriseObject"
         }
       },
       matured_product: {
         callback: {
-          dialogflow: 'createMaturedObject'
+          dialogflow: "createMaturedObject"
         }
       },
       growth_stage: {
         callback: {
-          dialogflow: 'createGrowthObject'
+          dialogflow: "createGrowthObject"
         }
       },
       alliances_parterships: {
         callback: {
-          dialogflow: 'createAlliancesObject'
+          dialogflow: "createAlliancesObject"
         }
       },
       accion_labs_locations: {
         callback: {
-          dialogflow: 'createLocationsObject'
+          dialogflow: "createLocationsObject"
         }
       },
       corporate_socail_resp: {
         callback: {
-          dialogflow: 'createCorporateObject'
+          dialogflow: "createCorporateObject"
         }
       }
     },
     format: {
       dialogflow: {
-        speech: '',
+        speech: "",
         messages: [],
-        displayText: '',
+        displayText: "",
         data: {}
       },
       alexa: {
-        version: '1.0',
+        version: "1.0",
         response: {
           outputSpeech: {
-            ssml: '',
-            type: 'SSML'
+            ssml: "",
+            type: "SSML"
           }
         },
         sessionAttributes: {}
