@@ -7,14 +7,8 @@ class CalendarHelper {
   constructor() {}
 
   getCalendarObject(body, format) {
-<<<<<<< HEAD
     // console.log(format.data.items);
     let dataArray = format.data.items;
-=======
-
-    console.log(format);
-    let dataArray = format.data.result[0].events;
->>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
     const todayDate = String(body.result.parameters.today_date);
     const datePeriod = String(body.result.parameters.period);
 
@@ -68,7 +62,6 @@ class CalendarHelper {
         data: {
           expectUserResponse: false
         },
-<<<<<<< HEAD
         messages: [
           {
             type: 0,
@@ -79,23 +72,12 @@ class CalendarHelper {
     } else {
       var eventsArray = [];
       for (let item of dataArray) {
-=======
-        messages: [{
-          type: 0,
-          speech: first_response
-        }]
-      };
-    } else {
-      var eventsArray = [];
-      for (let i in dataArray) {
->>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
         var isOngoing = false;
         var isAfter = false;
 
         var responseStartDateTime = '';
         var responseEndDateTime = '';
 
-<<<<<<< HEAD
         let start_date = '';
         let end_date = '';
 
@@ -119,11 +101,6 @@ class CalendarHelper {
         var current = moment();
         var beforeTime = moment.utc(start_date).local();
         var afterTime = moment.utc(end_date).local();
-=======
-        var current = moment();
-        var beforeTime = moment.utc(dataArray[i].start.dateTime).local();
-        var afterTime = moment.utc(dataArray[i].end.dateTime).local();
->>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
 
         if (current.isBetween(beforeTime, afterTime)) {
           isOngoing = true;
@@ -131,18 +108,13 @@ class CalendarHelper {
           isOngoing = false;
         }
 
-<<<<<<< HEAD
         if (current.isAfter(moment.utc(end_date).local())) {
-=======
-        if (current.isAfter(moment.utc(dataArray[i].end.dateTime).local())) {
->>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
           isAfter = true;
         } else {
           isAfter = false;
         }
 
         // for an all day event time is always 00:00:00 to 00:00:00
-<<<<<<< HEAD
         if (item.isAllDay) {
           responseStartDateTime = start_date;
           responseEndDateTime = end_date;
@@ -154,24 +126,10 @@ class CalendarHelper {
             .format();
           responseEndDateTime = moment
             .utc(end_date)
-=======
-        if (dataArray[i].isAllDay) {
-          responseStartDateTime = dataArray[i].start.dateTime;
-          responseEndDateTime = dataArray[i].end.dateTime;
-        } else {
-          // time from the server is of the UTC format and needs to be converted to local format
-          responseStartDateTime = moment
-            .utc(dataArray[i].start.dateTime)
-            .local()
-            .format();
-          responseEndDateTime = moment
-            .utc(dataArray[i].end.dateTime)
->>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
             .local()
             .format();
         }
 
-<<<<<<< HEAD
         // console.log(item.organizer.email);
         var event_object = {
           title: item.subject,
@@ -184,34 +142,13 @@ class CalendarHelper {
           organizerName: email,
           organizerEmail: email,
           isAllDay: false,
-=======
-        var event_object = {
-          title: dataArray[i].subject,
-          location: dataArray[i].location.displayName,
-          createdDateTime: dataArray[i].createdDateTime,
-          weblink: dataArray[i].webLink,
-          startTime: responseStartDateTime,
-          endTime: responseEndDateTime,
-          importance: dataArray[i].importance,
-          organizerName: dataArray[i].organizer.emailAddress.name,
-          organizerEmail: dataArray[i].organizer.emailAddress.address,
-          isAllDay: dataArray[i].isAllDay,
-          isCancelled: dataArray[i].isCancelled,
-          isOrganizer: dataArray[i].isOrganizer,
->>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
           isOngoing: isOngoing,
           isAfter: isAfter
         };
 
-<<<<<<< HEAD
         // if (!isAfter) {
         eventsArray.push(event_object);
         // }
-=======
-        if (!isAfter) {
-          eventsArray.push(event_object);
-        }
->>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
       }
 
       // sorting events based on startTime
@@ -265,19 +202,12 @@ class CalendarHelper {
           data: {
             expectUserResponse: false
           },
-<<<<<<< HEAD
           messages: [
             {
               type: 0,
               speech: first_response
             }
           ]
-=======
-          messages: [{
-            type: 0,
-            speech: first_response
-          }]
->>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
         };
       } else {
         response_object = {
@@ -286,12 +216,8 @@ class CalendarHelper {
           data: {
             expectUserResponse: false
           },
-<<<<<<< HEAD
           messages: [
             {
-=======
-          messages: [{
->>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
               type: 0,
               speech: first_response
             },
@@ -318,12 +244,8 @@ class CalendarHelper {
       data: {
         expectUserResponse: false
       },
-<<<<<<< HEAD
       messages: [
         {
-=======
-      messages: [{
->>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
           type: 0,
           speech: response
         },
@@ -343,12 +265,8 @@ class CalendarHelper {
       data: {
         expectUserResponse: false
       },
-<<<<<<< HEAD
       messages: [
         {
-=======
-      messages: [{
->>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
           type: 0,
           speech: response
         },
@@ -368,12 +286,8 @@ class CalendarHelper {
       data: {
         expectUserResponse: false
       },
-<<<<<<< HEAD
       messages: [
         {
-=======
-      messages: [{
->>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
           type: 'cancel_reading',
           speech: ''
         },
@@ -386,11 +300,6 @@ class CalendarHelper {
     return response_object;
   }
   getCalendarParams(body, query) {
-<<<<<<< HEAD
-=======
-
-    // console.log(body);
->>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
     let response_object = {};
     var date_period = String(body.result.parameters.period);
     var date = String(body.result.parameters.today_date);
@@ -416,19 +325,12 @@ class CalendarHelper {
       // var tomorrow = new Date(moment(today).add(1, 'days'));
 
       requestData = {
-<<<<<<< HEAD
         limit: 10,
         token:
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InNocnV0aS1raGVkZWthciIsImVtYWlsIjoic2hydXRpLmtoZWRla2FyQGFjY2lvbmxhYnMuY29tIiwibmFtZSI6IlNocnV0aSBLaGVkZWthciIsImFjY2Vzc1Rva2VuIjoieWEyOS5HbHhkQmZoSGl6SWU5ZEFoYzdwOWotRWprNzZ0RU1yY2R0djY3cm8zdG4wckhsMEpnSjdwc0JpdFdaS05XTGUxLUN1alItSFljNlRJOGpzM29VWXZJQVo0eXUwZUdVbnNQS3M3UUtJRWxRLUZ5Q01pUkJodXBIQnBTMHE2NUEiLCJpYXQiOjE1MTgxNjYxNzcsImV4cCI6MTUxODI1MjU3N30.bwjIxM39Odpzs0tJPmHzVBfVRARWiAZMVkHiYlzNdTM',
         filters: {
           andClause: [
             {
-=======
-        token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InNocnV0aS1raGVkZWthciIsImVtYWlsIjoic2hydXRpLmtoZWRla2FyQGFjY2lvbmxhYnMuY29tIiwibmFtZSI6IlNocnV0aSBLaGVkZWthciIsImFjY2Vzc1Rva2VuIjoieWEyOS5HbHhjQmYtSldIazQtdHVpbGZKMVhfTEFQRUhXN2tBZldieE0tTmhNYnRkQUhiNjBDeGZ5ZHRLczBHTzdjX3libHJubHdEd1hnWVc4Y2JZeXFSaHJrVjNOQXI3UExGMFVRbDR1VXBNZFh6ZGtmZktjZmh3NHVZNndPX2k4VXciLCJpYXQiOjE1MTgwODQ0MzcsImV4cCI6MTUxODE3MDgzN30.KLOuthm7QQyEVdV2yQoUCSzRfPqKUBdfyorSc6Vl15w',
-        limit: 10,
-        filters: {
-          andClause: [{
->>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
               key: 'startDateTime',
               value: todayStartTime,
               criteria: 'ge'
@@ -452,7 +354,6 @@ class CalendarHelper {
         var momentEndDate = moment(endDate);
 
         requestData = {
-<<<<<<< HEAD
           limit: 10,
           token:
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InNocnV0aS1raGVkZWthciIsImVtYWlsIjoic2hydXRpLmtoZWRla2FyQGFjY2lvbmxhYnMuY29tIiwibmFtZSI6IlNocnV0aSBLaGVkZWthciIsImFjY2Vzc1Rva2VuIjoieWEyOS5HbHhkQmZoSGl6SWU5ZEFoYzdwOWotRWprNzZ0RU1yY2R0djY3cm8zdG4wckhsMEpnSjdwc0JpdFdaS05XTGUxLUN1alItSFljNlRJOGpzM29VWXZJQVo0eXUwZUdVbnNQS3M3UUtJRWxRLUZ5Q01pUkJodXBIQnBTMHE2NUEiLCJpYXQiOjE1MTgxNjYxNzcsImV4cCI6MTUxODI1MjU3N30.bwjIxM39Odpzs0tJPmHzVBfVRARWiAZMVkHiYlzNdTM',
@@ -465,16 +366,6 @@ class CalendarHelper {
           filters: {
             andClause: [
               {
-=======
-          token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InNocnV0aS1raGVkZWthciIsImVtYWlsIjoic2hydXRpLmtoZWRla2FyQGFjY2lvbmxhYnMuY29tIiwibmFtZSI6IlNocnV0aSBLaGVkZWthciIsImFjY2Vzc1Rva2VuIjoieWEyOS5HbHhjQmYtSldIazQtdHVpbGZKMVhfTEFQRUhXN2tBZldieE0tTmhNYnRkQUhiNjBDeGZ5ZHRLczBHTzdjX3libHJubHdEd1hnWVc4Y2JZeXFSaHJrVjNOQXI3UExGMFVRbDR1VXBNZFh6ZGtmZktjZmh3NHVZNndPX2k4VXciLCJpYXQiOjE1MTgwODQ0MzcsImV4cCI6MTUxODE3MDgzN30.KLOuthm7QQyEVdV2yQoUCSzRfPqKUBdfyorSc6Vl15w',
-          limit: 10,
-          orderByClause: [{
-            key: 'endDateTime',
-            criteria: 'desc'
-          }],
-          filters: {
-            andClause: [{
->>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
                 key: 'startDateTime',
                 value: momentStartDate,
                 criteria: 'ge'
@@ -497,19 +388,12 @@ class CalendarHelper {
           .add(1, 'minute');
 
         requestData = {
-<<<<<<< HEAD
           limit: 10,
           token:
             'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InNocnV0aS1raGVkZWthciIsImVtYWlsIjoic2hydXRpLmtoZWRla2FyQGFjY2lvbmxhYnMuY29tIiwibmFtZSI6IlNocnV0aSBLaGVkZWthciIsImFjY2Vzc1Rva2VuIjoieWEyOS5HbHhkQmZoSGl6SWU5ZEFoYzdwOWotRWprNzZ0RU1yY2R0djY3cm8zdG4wckhsMEpnSjdwc0JpdFdaS05XTGUxLUN1alItSFljNlRJOGpzM29VWXZJQVo0eXUwZUdVbnNQS3M3UUtJRWxRLUZ5Q01pUkJodXBIQnBTMHE2NUEiLCJpYXQiOjE1MTgxNjYxNzcsImV4cCI6MTUxODI1MjU3N30.bwjIxM39Odpzs0tJPmHzVBfVRARWiAZMVkHiYlzNdTM',
           filters: {
             andClause: [
               {
-=======
-          token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InNocnV0aS1raGVkZWthciIsImVtYWlsIjoic2hydXRpLmtoZWRla2FyQGFjY2lvbmxhYnMuY29tIiwibmFtZSI6IlNocnV0aSBLaGVkZWthciIsImFjY2Vzc1Rva2VuIjoieWEyOS5HbHhjQmYtSldIazQtdHVpbGZKMVhfTEFQRUhXN2tBZldieE0tTmhNYnRkQUhiNjBDeGZ5ZHRLczBHTzdjX3libHJubHdEd1hnWVc4Y2JZeXFSaHJrVjNOQXI3UExGMFVRbDR1VXBNZFh6ZGtmZktjZmh3NHVZNndPX2k4VXciLCJpYXQiOjE1MTgwODQ0MzcsImV4cCI6MTUxODE3MDgzN30.KLOuthm7QQyEVdV2yQoUCSzRfPqKUBdfyorSc6Vl15w',
-          limit: 10,
-          filters: {
-            andClause: [{
->>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
                 key: 'startDateTime',
                 value: startDate,
                 criteria: 'ge'
@@ -525,15 +409,9 @@ class CalendarHelper {
       }
     }
 
-<<<<<<< HEAD
     query.headers = {
       'X-Mail-Id': this.getXmailID(body.result.contexts)
     };
-=======
-    // query.headers = {
-    //   'X-Mail-Id': this.getXmailID(body.result.contexts)
-    // };
->>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
     query.data = requestData;
 
     return query;
@@ -566,8 +444,4 @@ class CalendarHelper {
   }
 }
 
-<<<<<<< HEAD
 module.exports = CalendarHelper;
-=======
-module.exports = CalendarHelper;
->>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167

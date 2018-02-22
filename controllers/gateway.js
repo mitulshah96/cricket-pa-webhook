@@ -49,13 +49,8 @@ class Gateway {
               query,
               result
             );
-<<<<<<< HEAD
             // console.log('interceptor');
             // console.log('query' + JSON.stringify(query));
-=======
-           // console.log('interceptor');
-           // console.log('query' + JSON.stringify(query));
->>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
           }
         } else {
           throw new TypeError(`Unknown request initiator: ${config.initiator}`);
@@ -67,11 +62,7 @@ class Gateway {
         config.url === '' ||
         (config.method !== undefined || config.method === '')
       ) {
-<<<<<<< HEAD
         // console.log(query);
-=======
-       // console.log(query);
->>>>>>> e3a075984d3871ad2e0cfa27cca0851362ef6167
         const response = await axios(query);
         config = this.handle_response(config, response.data);
         return config.format;
