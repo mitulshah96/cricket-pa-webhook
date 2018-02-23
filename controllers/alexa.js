@@ -69,6 +69,7 @@ class Alexa {
 
     return await format;
   }
+  
   async get_news(body, format) {
     const speech = new Speech();
 
@@ -91,10 +92,6 @@ class Alexa {
     return await format;
   }
 
-  async get_profile(body, format) {
-    format.response.outputSpeech.ssml = "hello world";
-    return format;
-  }
 
   async get_emailaddress_callback(body, format) {
     return format;
@@ -154,17 +151,6 @@ class Alexa {
   }
 
 
- 
-
-  intercept_sample2(body, query, result) {
-    let username = result.result.userPrincipalName;
-    username = username.substring(0, username.lastIndexOf("@")).toLowerCase();
-    username = username.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, "");
-
-    query.url = `${query.url}${username}`;
-    return query;
-  }
-
   intercept_emails(body, query) {
     query.headers = {
       "x-mail-token": `${body.session.user.accessToken}`,
@@ -173,72 +159,6 @@ class Alexa {
     return query;
   }
 
-
-
-  intercept_events(body, query) {
-    let date;
-    query.headers = {
-      "x-mail-token": `${body.session.user.accessToken}`,
-      "x-mail-server": "Microsoft"
-    };
-    if(body.request.intent.slots.today.hasOwnProperty('value')){
-      date=body.request.intent.slots.today.value
-      }
-    else{
-      date=new Date();
-      date = date.toISOString().slice(0,10).replace(/-/g,"-");
-    }
-    let startdate = new Date( moment.utc(date).format())
-    
-    let enddate =  new Date(moment.utc(date).add(1,'days').add(1, 'minute').format())
-    
-    let requestData = {};
-    requestData = {
-      limit: 10,
-      filters: {
-        andClause: [{
-            key: 'startDateTime',
-            value: startdate,
-            criteria: 'ge'
-          },
-          {
-            key: 'endDateTime',
-            value: enddate,
-            criteria: 'le'
-          }
-        ]
-      }
-    };
-    query.data = requestData;
-
-    return query;
-  }
-
-  intercept_search(body, query) {
-    return new Promise((resolve, reject) => {
-      request.get(
-        `${envConfig.PA_service.admin[env].base_url}mailms/o365/user/profile`,
-        {
-          headers: {
-            "x-mail-token": body.session.user.accessToken,
-            "x-mail-server": "Microsoft"
-          }
-        },
-        (error, response, result) => {
-          if (!error && response.statusCode == 200) {
-            let username = JSON.parse(result).result.userPrincipalName;
-            username = username.substring(0, username.lastIndexOf("@"));
-            query.url = `${query.url}${
-              body.request.intent.slots.query.value
-            }&size=10&pageNumber=0&userId=${username}`;
-            resolve(query);
-          } else {
-            reject(error);
-          }
-        }
-      );
-    });
-  }
 }
 
 module.exports = Alexa;
