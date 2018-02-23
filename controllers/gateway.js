@@ -30,7 +30,7 @@ class Gateway {
           }
           const alexa = new Alexa();
 
-          if (config.intercept && config.intercept[config.initiator]) {
+          if (!!config.intercept && config.intercept[config.initiator]) {
             query = await alexa[config.intercept[config.initiator]](
               body,
               query,
@@ -43,14 +43,12 @@ class Gateway {
           }
           const dialogflow = new DialogFlow();
 
-          if (config.intercept && config.intercept[config.initiator]) {
+          if (!!config.intercept && config.intercept[config.initiator]) {
             query = await dialogflow[config.intercept[config.initiator]](
               body,
               query,
               result
             );
-            // console.log('interceptor');
-            // console.log('query' + JSON.stringify(query));
           }
         } else {
           throw new TypeError(`Unknown request initiator: ${config.initiator}`);
@@ -58,11 +56,13 @@ class Gateway {
       }
 
       if (
-        config.url !== undefined ||
-        config.url === '' ||
-        (config.method !== undefined || config.method === '')
+        (!!config.url ||
+          config.url === '' ||
+          !!config.method ||
+          config.method === '') &&
+        ((!!config.callback && config.callback[config.initiator]) ||
+          (!!config.intercept && config.intercept[config.initiator]))
       ) {
-        // console.log(query);
         const response = await axios(query);
         config = this.handle_response(config, response.data);
         return config.format;

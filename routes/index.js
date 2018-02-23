@@ -67,7 +67,7 @@
   });
 
   router.post('/api/pams', (req, res) => {
-    console.log('here');
+    // console.log('here');
     // console.log(req.body);
     var queryBody = req.body;
     var queryData = JSON.stringify(queryBody);
@@ -584,7 +584,7 @@
 
       async function waterfall(body, config) {
         response = await gateway.handle_intent(body, config, response);
-        if (!!config.callback) {
+        if (!!config.callback && !!config.callback[config.initiator]) {
           const result = await gateway.handle_callbacks(config, body);
           return result;
         } else {

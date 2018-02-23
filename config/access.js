@@ -98,11 +98,12 @@ module.exports = {
             direct: true,
             headers: {},
             intercept: {
-              alexa: "intercept_get_email"
-              // dialogflow: "handleUserName"
+              alexa: "intercept_get_email",
+               dialogflow: "handleEmailParams"
             },
             callback: {
-              alexa: "get_emails"
+              alexa: "get_emails",
+              dialogflow:"createEmailObject"
             }
           }
         ]

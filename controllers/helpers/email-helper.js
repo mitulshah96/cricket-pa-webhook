@@ -7,8 +7,6 @@ class EmailHelper {
   constructor() {}
 
   getEmailObject(body, format) {
-    const emailFrom = String(body.result.parameters.user_first_name);
-    const emailType = String(body.result.parameters.mail_type);
 
     const responses = [
       'This is what shows up in your inbox.',
@@ -19,120 +17,60 @@ class EmailHelper {
     let response_object = {};
     let bodyPreview = '';
     let first_response = '';
-
-    let dataArray = format.data.result;
-
+    let dataArray = format.data.messages;
+   
     if (dataArray.length == 0) {
-      if (emailFrom == '') {
-        if (emailType != '') {
-          if (emailType == 'read') {
-            first_response = "You don't have any read emails in your inbox";
-          } else {
-            first_response = "You don't have any unread emails in your inbox";
-          }
-        } else {
-          first_response = "You don't have any emails in your inbox";
-        }
-
-        response_object = {
-          speech: '',
-          displayText: '',
-          data: {
-            expectUserResponse: false
-          },
-          messages: [{
-            type: 0,
-            speech: first_response
-          }]
-        };
-      } else {
-        if (emailType != '') {
-          if (emailType == 'read') {
-            first_response = `No read emails found from ${emailFrom}`;
-          } else {
-            first_response = `No unread emails found from ${emailFrom}`;
-          }
-        } else {
-          first_response = `No emails found from ${emailFrom}`;
-        }
-        response_object = {
-          speech: '',
-          displayText: '',
-          data: {
-            expectUserResponse: false
-          },
-          messages: [{
-            type: 0,
-            speech: first_response
-          }]
-        };
-      }
+      first_response = 'No Emails Found';
     } else {
       var emailsArray = [];
 
       for (let i in dataArray) {
+        let fromname;
+        if(!!dataArray[i].from.emailAddress.name){
+         fromname= dataArray[i].from.emailAddress.name
+        }else{
+           fromname='No-reply '
+        }
+
         var email_object = {
           subject: dataArray[i].subject,
           from: {
-            name: dataArray[i].from.emailAddress.name,
+             name: fromname,
             address: dataArray[i].from.emailAddress.address
           },
           emailBody: dataArray[i].bodyPreview,
           receivedDateTime: dataArray[i].receivedDateTime,
-          isEmailRead: dataArray[i].isRead,
-          weblink: dataArray[i].webLink
+          // isEmailRead: dataArray[i].isRead,
+          // weblink: dataArray[i].webLink
         };
         emailsArray.push(email_object);
       }
+      
 
       // sorting emails
       const orderedArray = emailsArray.sort();
 
-      if (emailFrom == '') {
-        first_response = responses[this.getRandomInt(0, responses.length - 1)];
-        response_object = {
-          speech: '',
-          displayText: '',
-          data: {
-            expectUserResponse: true
+       response_object = {
+        speech: '',
+        displayText: '',
+        data: {
+          expectUserResponse: false
+        },
+        messages: [
+          {
+            type: 0,
+            speech: 'This is what shows up in your inbox'
           },
-          messages: [{
-              type: 0,
-              speech: first_response
-            },
-            {
-              type: 'email_card',
-              emails: orderedArray
-            },
-            {
-              type: 0,
-              speech: 'Do you want me to read your emails?'
-            }
-          ]
-        };
-      } else {
-        first_response = `Here are your emails from ${emailFrom}`;
-        response_object = {
-          speech: '',
-          displayText: '',
-          data: {
-            expectUserResponse: true
+          {
+            type: 'email_card',
+            emails: emailsArray
           },
-          messages: [{
-              type: 0,
-              speech: first_response
-            },
-            {
-              type: 'email_card',
-              emails: emailsArray
-            },
-            {
-              type: 0,
-              speech: 'Do you want me to read your emails?'
-            }
-          ]
-        };
-      }
+          {
+            type: 0,
+            speech: 'Do you want me to read the emails?'
+          }
+        ]
+      };
     }
 
     return response_object;
@@ -202,55 +140,9 @@ class EmailHelper {
   }
 
   getEmailParams(body, query) {
-    const emailFrom = String(body.result.parameters.user_first_name);
-    const emailType = String(body.result.parameters.mail_type);
-
-    let requestData = {};
-    let emailURL = '';
-    requestData = {
-      type: 'Inbox',
-      fields: ['Subject', 'BodyPreview', 'From', 'ReceivedDateTime', 'WebLink'],
-      filters: {
-        field: {
-          key: 'isRead',
-          value: 'false',
-          criteria: 'eq'
-        }
-      }
+     query.headers = {
+      'x-access-token': this.getXmailID(body.result.contexts)
     };
-
-    if (emailFrom == '') {
-      emailURL = `${config.base_url}/${
-        config.service_url
-      }/o365/mail/offset/0/limit/10`;
-
-      if (emailType != '') {
-        if (emailType == 'read') {
-          requestData.filters.field.value = 'true';
-        } else {
-          requestData.filters.field.value = 'false';
-        }
-      }
-    } else {
-      emailURL = `${config.base_url}/${config.service_url}/o365/search/mail`;
-
-      requestData = {
-        limit: 10,
-        search: {
-          field: {
-            key: 'from',
-            value: emailFrom
-          }
-        }
-      };
-    }
-
-    query.url = emailURL;
-    query.headers = {
-      'X-Mail-Id': this.getXmailID(body.result.contexts)
-    };
-    query.data = requestData;
-
     return query;
   }
 
