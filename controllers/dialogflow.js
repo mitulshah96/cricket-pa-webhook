@@ -237,7 +237,7 @@ class DialogFlow {
   async createGrowthObject() {
     return this.aic.getStartUpData();
   }
-  async createAllian  
+  async createAllianceObject() {
     return this.aic.getAlliancesData();
   }
   async createLocationsObject() {
@@ -245,6 +245,9 @@ class DialogFlow {
   }
   async createCorporateObject() {
     return this.aic.getCorporateData();
+  }
+  async createCompanyPoliciesObject() {
+    return this.aic.getCompanyPoliciesData();
   }
 
   async createDefaultObject() {

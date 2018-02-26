@@ -30,7 +30,7 @@ module.exports = {
       'default_fallback_intent',
 
       //============//
-      //=== AIC ===//
+      //=== Accion Website ===//
       //===========//
 
       'about',
@@ -52,7 +52,15 @@ module.exports = {
       'growth_stage',
       'alliances_parterships',
       'accion_labs_locations',
-      'corporate_socail_resp'
+      'corporate_socail_resp',
+      'company_policies',
+
+      //================//
+      //==== AIC-Demo ===//
+      //===============//
+      'sessions',
+      'session_detail',
+      'speakers'
     ],
     intents: {
       //================================================================================//
@@ -392,6 +400,11 @@ module.exports = {
       corporate_socail_resp: {
         callback: {
           dialogflow: 'createCorporateObject'
+        }
+      },
+      company_policies: {
+        callback: {
+          dialogflow: 'createCompanyPoliciesObject'
         }
       }
     },
