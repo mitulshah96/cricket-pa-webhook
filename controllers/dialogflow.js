@@ -129,7 +129,7 @@ class DialogFlow {
 
   handleUserName(body, query) {
     query.headers = {
-      'x-mail-id': this.getXmailID(body.result.contexts)
+      'x-access-token': this.getXmailID(body.result.contexts)
     };
     return query;
   }
