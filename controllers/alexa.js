@@ -101,6 +101,50 @@ class Alexa {
     return await format;
   }
 
+
+
+  async get_search(body, format) {
+    const speech = new Speech();
+
+    if (
+      !!format.response.outputSpeech.ssml.data.search.profiles.items &&
+      format.response.outputSpeech.ssml.data.search.profiles.items.length > 0
+    ) {
+      speech.say("Your Search result are").pause("350ms");
+
+      format.response.outputSpeech.ssml.data.search.profiles.items.map((searches, i) => {
+        speech
+          .say(`${i + 1}.`)
+          .pause("50ms")
+          .say(`${searches.name}`)
+          .pause("100ms")
+          .say(`designation is`)
+          .say(`${searches.designation}`)
+          .pause("200ms")
+          .say("a quick introduction is")
+          .pause("200ms")
+          .say(`${searches.introduction}`)  
+          .pause("200ms")
+          .say(`location is`)
+          .say(`${searches.location}`)
+          .pause("200ms")
+          .say("and email is")
+          .say(`${searches.email}`) 
+          .pause("800ms") 
+        
+        
+      });
+      speech.say("That's all from Your search result. Thank You.");
+    } else {
+      speech.say("Something went wrong. Please try it again").pause("200ms");
+    }
+    format.response.outputSpeech.ssml = speech.ssml();
+    return await format;
+  }
+
+
+
+
   async get_emailaddress_callback(body, format) {
     return format;
   }
@@ -183,6 +227,33 @@ class Alexa {
     };
     return query;
   }
+
+  intercept_search(body,querys){
+    const queryparam = JSON.stringify(body.request.intent.slots.query.value)
+    querys.data = {
+      query:`{
+        search(query:${queryparam}){
+          pageLength
+          profiles {
+            pageOffset
+            pageLength
+            total
+            items {
+              id
+              name
+              email
+              location
+              introduction
+              designation
+              aiclevel
+            }
+          }
+        }
+      }`
+    }
+    return querys
+  }
+
 }
 
 module.exports = Alexa;

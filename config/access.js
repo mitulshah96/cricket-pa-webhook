@@ -194,7 +194,7 @@ module.exports = {
       //===================================//
 
       news_widget: {
-        url: `https://prioriti.net/aicgateway/accion`,
+        url: `http://aicstage.accionlabs.com/api/accion`,
         method: 'POST',
         parameters: {
           type: 'params',
@@ -229,11 +229,25 @@ module.exports = {
       //===================================================//
       //============== SEARCH / UNKNOWN-INPUT ==============//
       //====================================================//
-      // default_fallback_intent: {
-      //   callback: {
-      //     dialogflow: "createDefaultObject"
-      //   }
-      // },
+
+      search_widget: {
+        url: 'http://aicstage.accionlabs.com/api/accion',
+        method: "POST",
+        parameters: {
+          type: "params",
+          value: {}
+        },
+        headers: {},
+        
+        intercept: {
+          alexa: "intercept_search"
+        },
+        callback: {
+          alexa: "get_search"
+        }
+      },
+
+
       default_fallback_intent: {
         url: 'http://aicstage.accionlabs.com/api/accion',
         method: "POST",
