@@ -88,7 +88,8 @@ class DialogFlow {
   //============ SEARCH ================//
   //===================================//
   async createSearchObject(body, format) {
-    format = this.search.getSearchObject(body, format);
+    //  console.log(format.data.data.search)
+      format = this.search.getSearchObject(body, format);
     return format;
   }
   //===================================//
@@ -145,8 +146,9 @@ class DialogFlow {
   handleCalendarParams(body, query) {
     return this.calendar.getCalendarParams(body, query);
   }
-  handleSearchParams(body, query, result) {
-    return this.search.getSearchParams(body, query, result);
+  handleSearchParams(body, querys) {
+    return this.search.getSearchParams(body, querys);
+   
   }
 
   getXmailID(contexts) {

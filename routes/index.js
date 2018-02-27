@@ -87,7 +87,7 @@
         if (err) {
           self.emit('error', err);
         } else {
-          console.log('=======success=======');
+          // console.log('=======success=======');
           const jsonData = JSON.parse(body);
           const result = jsonData.result;
 
@@ -607,7 +607,7 @@
         return res.json(payload);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       req.config = gateway.handle_error(req.config, error.message);
       return res.json(req.config.format);
     }

@@ -23,14 +23,19 @@ class SearchHelper {
     ];
   }
   getSearchObject(body, format) {
-    const query = body.result.resolvedQuery;
+    
+    // const query = body.result.resolvedQuery;
+   
+
     const time = String(body.timestamp);
     let type = '';
     let publishedOn = '';
 
-    if (format.data.responseCode == 0) {
-      let dataArray = format.data.data.contentDocuments;
+     console.log(format.data.data.search.profiles.items)
+    if (!!format.data.data.search.profiles.items && format.data.data.search.profiles.items.length > 0) {
 
+      let dataArray = format.data.data.search.profiles.items;
+     
       var searchArray = [];
 
       if (dataArray.length == 0) {
@@ -50,28 +55,19 @@ class SearchHelper {
         };
       } else {
         for (let i in dataArray) {
-          if (dataArray[i].id) {
-            if (dataArray[i].type == 'Video') {
-              type = 'video';
-            } else {
-              type = 'search';
-            }
-            // else if (dataArray[i].type == "OtherDocument") {
-            //   type = "search";
-            // }
-            var search_object = {
-              id: dataArray[i].id,
-              title: dataArray[i].title,
-              summary: dataArray[i].summary,
-              publishedBy: 'Staff',
-              type: type,
-              publishedOn: time,
-              likes: dataArray[i].likes,
-              views: dataArray[i].views,
-              shares: dataArray[i].shares
-            };
-            searchArray.push(search_object);
-          }
+ 
+          var search_object = {
+            id: dataArray[i].designation,
+            title: dataArray[i].name,
+            summary: dataArray[i].introduction,
+            publishedBy: dataArray[i].email,
+            type: '',
+            publishedOn: time,
+            likes: '0',
+            views: '',
+            shares: '0'
+          };
+          searchArray.push(search_object);
         }
 
         let first_response = 'I found this for you.';
@@ -115,22 +111,37 @@ class SearchHelper {
     return this.response_object;
   }
 
-  getSearchParams(body, query, result) {
-    const resolvedQuery = String(body.result.resolvedQuery);
-    // let username = result.data.result.userPrincipalName;
-    // username = username.substring(0, username.lastIndexOf("@")).toLowerCase();
-    // username = username.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, "");
-
-    query.url = `${
-      query.url
-    }${resolvedQuery}&size=10&pageNumber=0&userId=deepakdewani`;
-
-    return query;
+  getSearchParams(body, querys) {
+   
+    const queryparam = JSON.stringify(body.result.resolvedQuery)
+    querys.data = {
+      query:`{
+        search(query:${queryparam}){
+          pageLength
+          profiles {
+            pageOffset
+            pageLength
+            total
+            items {
+              id
+              name
+              email
+              location
+              introduction
+              designation
+              aiclevel
+            }
+          }
+        }
+      }`
+    }
+    return querys
   }
 
   getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+  
 }
 
 module.exports = SearchHelper;

@@ -221,12 +221,27 @@ module.exports = {
       //===================================================//
       //============== SEARCH / UNKNOWN-INPUT ==============//
       //====================================================//
+      // default_fallback_intent: {
+      //   callback: {
+      //     dialogflow: "createDefaultObject"
+      //   }
+      // },
       default_fallback_intent: {
+        url: 'http://aicstage.accionlabs.com/api/accion',
+        method: "POST",
+        parameters: {
+          type: "params",
+          value: {}
+        },
+        headers: {},
+        
+        intercept: {
+          dialogflow: "handleSearchParams"
+        },
         callback: {
-          dialogflow: "createDefaultObject"
+          dialogflow: "createSearchObject"
         }
       },
-
       //===========================================//
       //============== NAVIGATE-HOME ==============//
       //==========================================//

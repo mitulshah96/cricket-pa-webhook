@@ -1,6 +1,7 @@
 const Speech = require("ssml-builder");
 const moment = require("moment");
 const request = require("request");
+var emailid;
 
 class Alexa {
   constructor() {}

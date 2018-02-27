@@ -54,7 +54,7 @@ class Gateway {
           throw new TypeError(`Unknown request initiator: ${config.initiator}`);
         }
       }
-
+      
       if (
         (!!config.url ||
           config.url === '' ||
@@ -70,6 +70,7 @@ class Gateway {
         return config.format;
       }
     } catch (error) {
+      console.log(error.message)
       throw error;
     }
   }
