@@ -577,6 +577,7 @@
    *
    */
   router.post('/webhook', handleAccess, async (req, res) => {
+    // console.log('webhook');
     const gateway = new Gateway();
 
     try {

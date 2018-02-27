@@ -4,47 +4,32 @@ class NewsHelper {
   constructor() {}
   getNewsObject(body, format) {
     let response_object = {};
-    let dataArray = format.data.data.contentDocuments;
-    // let baseImageUrl = envConfig.;
-
-    const baseImageUrl =
-      `${envConfig.PA_service.admin[envConfig.environment].news_base_url}` ||
-      'local';
+    let dataArray = format.data.data.demos.items;
+    console.log(dataArray);
 
     let newsArray = [];
     let type = '';
     let videoURL = '';
     let imgUrl = '';
 
-    for (let i in dataArray) {
-      if (dataArray[i].thumbNailUrl != null) {
-        // console.log(dataArray[i].thumbNailUrl)
-        if (dataArray[i].thumbNailUrl.match(/http/)) {
-          imgUrl = dataArray[i].thumbNailUrl;
-        } else {
-          imgUrl = baseImageUrl + dataArray[i].thumbNailUrl;
-        }
-      } else {
-        imgUrl = '';
-      }
-
+    for (let i of dataArray) {
       const news_object = {
-        title: dataArray[i].title,
+        title: i.title,
         subtitle: '',
-        formattedText: dataArray[i].summary,
-        date: dataArray[i].lastUpdatedOn,
-        entryId: dataArray[i].id,
-        type: dataArray[i].type,
+        formattedText: i.tagline,
+        date: i.firstCreatedTimestamp,
+        entryId: i.id,
+        type: '',
         image: {
-          url: imgUrl
+          url: 'https://prioriti.net/aicgateway/aic/images/' + i.thumbnail
         },
-        likeCount: dataArray[i].likes,
-        viewCount: dataArray[i].views,
-        buttons: [],
-        videoURL: ''
+        likeCount: 0,
+        viewCount: 0
       };
 
       newsArray.push(news_object);
+
+      console.log(news_object);
     }
 
     let first_response = "This is what's trending";
@@ -135,21 +120,29 @@ class NewsHelper {
     return response_object;
   }
 
-  // getUserName(body, query) {
-  //   query.headers = {
-  //     "x-mail-id": this.getXmailID(body.result.contexts)
-  //   };
-  //   return query;
-  // }
-
-  getNewsParams(body, query, result) {
-    // let username = result.data.result.userPrincipalName;
-    // username = username.substring(0, username.lastIndexOf("@")).toLowerCase();
-    // username = username.replace(/[&\/\\#,+()$~%.'":*?<>{}]/g, "");
-    // query.url = `${query.url}${username}`;
-    query.url = `${query.url}deepakdewani`;
-
-    return query;
+  getNewsParams(body, querys) {
+    querys.data = {
+      query: `{ 
+				demos(
+					pageOffset: 0, 
+					pageLength: 5
+				)
+				{ 
+					total,
+					items {
+						id, 
+						title, 
+						tagline, 
+						authors, 
+						embedUrl, 
+						description, 
+						thumbnail, 
+						_firstCreatedTimestamp
+					} 
+				} 
+			}`
+    };
+    return querys;
   }
 
   getXmailID(contexts) {

@@ -7,7 +7,6 @@ class EmailHelper {
   constructor() {}
 
   getEmailObject(body, format) {
-
     const responses = [
       'This is what shows up in your inbox.',
       'This is what I found in your inbox',
@@ -18,7 +17,7 @@ class EmailHelper {
     let bodyPreview = '';
     let first_response = '';
     let dataArray = format.data.messages;
-   
+
     if (dataArray.length == 0) {
       first_response = 'No Emails Found';
     } else {
@@ -26,31 +25,30 @@ class EmailHelper {
 
       for (let i in dataArray) {
         let fromname;
-        if(!!dataArray[i].from.emailAddress.name){
-         fromname= dataArray[i].from.emailAddress.name
-        }else{
-           fromname='No-reply '
+        if (!!dataArray[i].from.emailAddress.name) {
+          fromname = dataArray[i].from.emailAddress.name;
+        } else {
+          fromname = 'No-reply ';
         }
 
         var email_object = {
           subject: dataArray[i].subject,
           from: {
-             name: fromname,
+            name: fromname,
             address: dataArray[i].from.emailAddress.address
           },
           emailBody: dataArray[i].bodyPreview,
-          receivedDateTime: dataArray[i].receivedDateTime,
+          receivedDateTime: dataArray[i].receivedDateTime
           // isEmailRead: dataArray[i].isRead,
           // weblink: dataArray[i].webLink
         };
         emailsArray.push(email_object);
       }
-      
 
       // sorting emails
       const orderedArray = emailsArray.sort();
 
-       response_object = {
+      response_object = {
         speech: '',
         displayText: '',
         data: {
@@ -84,7 +82,8 @@ class EmailHelper {
       data: {
         expectUserResponse: false
       },
-      messages: [{
+      messages: [
+        {
           type: 0,
           speech: response
         },
@@ -105,7 +104,8 @@ class EmailHelper {
       data: {
         expectUserResponse: false
       },
-      messages: [{
+      messages: [
+        {
           type: 0,
           speech: response
         },
@@ -126,7 +126,8 @@ class EmailHelper {
       data: {
         expectUserResponse: false
       },
-      messages: [{
+      messages: [
+        {
           type: 'cancel_reading',
           speech: ''
         },
@@ -140,13 +141,13 @@ class EmailHelper {
   }
 
   getEmailParams(body, query) {
-     query.headers = {
-      'x-access-token': this.getXmailID(body.result.contexts)
+    query.headers = {
+      'x-access-token': this.getXAccessToken(body.result.contexts)
     };
     return query;
   }
 
-  getXmailID(contexts) {
+  getXAccessToken(contexts) {
     for (var i in contexts) {
       if (contexts[i].parameters.x_mail_id) {
         return contexts[i].parameters.x_mail_id;
