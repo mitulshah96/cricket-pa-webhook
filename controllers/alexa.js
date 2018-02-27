@@ -70,22 +70,30 @@ class Alexa {
 
     return await format;
   }
-  
+
   async get_news(body, format) {
     const speech = new Speech();
 
-    if (!!format.response.outputSpeech.ssml.data && format.response.outputSpeech.ssml.data.length > 0) {
-      speech.say("This is what trending in news").pause("350ms");
+    if (
+      !!format.response.outputSpeech.ssml.data.demos.items &&
+      format.response.outputSpeech.ssml.data.demos.items.length > 0
+    ) {
+      speech.say("This is what trending in AIC").pause("350ms");
 
-      format.response.outputSpeech.ssml.data.map((news, i) => {
-          speech
-            .say(`${news.title}`)
-            .pause("100ms")
-            .say(`summary is`)
-            .say(`${news.description}`)
-            .pause("800ms");
+      format.response.outputSpeech.ssml.data.demos.items.map((news, i) => {
+        speech
+          .say(`${i + 1}.`)
+          .pause("50ms")
+          .say(`${news.title}`)
+          .pause("100ms")
+          .say(`summary is`)
+          .say(`${news.tagline}`)
+          .pause("200ms")
+          .say(`description is`)
+          .say(`${news.description}`)
+          .pause("800ms");
       });
-      speech.say("That's all from news. Thank You.");
+      speech.say("That's all from AIC. Thank You.");
     } else {
       speech.say("Something went wrong. Please try it again").pause("200ms");
     }
@@ -93,11 +101,9 @@ class Alexa {
     return await format;
   }
 
-
   async get_emailaddress_callback(body, format) {
     return format;
   }
-
 
   intercept_email(body, query) {
     query.headers = {
@@ -106,10 +112,29 @@ class Alexa {
     return query;
   }
 
-  intercept_news(body,query){
-    let value=!!body.request.intent.slots.query.value ? body.request.intent.slots.query.value:null
-    query.url=`${query.url}${value}&plaintext=true`;
-    return query;
+  intercept_news(body, querys) {
+    querys.data = {
+      query: `{ 
+				demos(
+					pageOffset: 0, 
+					pageLength: 5,
+				)
+				{ 
+					total,
+					items {
+						id, 
+						title, 
+						tagline, 
+						authors, 
+						embedUrl, 
+						description, 
+						thumbnail, 
+						_firstCreatedTimestamp
+					} 
+				} 
+			}`
+    };
+    return querys;
   }
 
   intercept_get_email(body, query, result) {
@@ -151,7 +176,6 @@ class Alexa {
     return query;
   }
 
-
   intercept_emails(body, query) {
     query.headers = {
       "x-mail-token": `${body.session.user.accessToken}`,
@@ -159,7 +183,6 @@ class Alexa {
     };
     return query;
   }
-
 }
 
 module.exports = Alexa;
