@@ -28,68 +28,8 @@ class SearchHelper {
     let publishedOn = '';
 
     //  console.log(format.data.data.search.profiles.items)
-    if (
-      !!format.data.data.search.profiles.items &&
-      format.data.data.search.profiles.items.length > 0
-    ) {
-      let dataArray = format.data.data.search.profiles.items;
 
-      var searchArray = [];
-
-      if (dataArray.length == 0) {
-        let first_response = 'Nothing found.';
-        this.response_object = {
-          speech: '',
-          displayText: '',
-          data: {
-            expectUserResponse: false
-          },
-          messages: [
-            {
-              type: 0,
-              speech: first_response
-            }
-          ]
-        };
-      } else {
-        for (let i in dataArray) {
-          var search_object = {
-            id: dataArray[i].designation,
-            title: dataArray[i].name,
-            summary: dataArray[i].introduction,
-            publishedBy: dataArray[i].email,
-            type: '',
-            publishedOn: time,
-            likes: '0',
-            views: '',
-            shares: '0'
-          };
-          searchArray.push(search_object);
-        }
-
-        let first_response = 'I found this for you.';
-        this.response_object = {
-          speech: '',
-          displayText: '',
-          data: {
-            expectUserResponse: false
-          },
-          messages: [
-            {
-              type: 0,
-              speech: first_response
-            },
-            {
-              type: 'search_card',
-              results: searchArray
-            }
-          ]
-        };
-      }
-    } else {
-      let response = this.fallbackResponses[
-        this.getRandomInt(0, this.fallbackResponses.length - 1)
-      ];
+    if (format.data.data.search.profiles.items.length === 0) {
       this.response_object = {
         speech: '',
         displayText: '',
@@ -99,10 +39,87 @@ class SearchHelper {
         messages: [
           {
             type: 0,
-            speech: response
+            speech: 'Nothing found.'
           }
         ]
       };
+    } else {
+      if (
+        !!format.data.data.search.profiles.items &&
+        format.data.data.search.profiles.items.length > 0
+      ) {
+        let dataArray = format.data.data.search.profiles.items;
+
+        var searchArray = [];
+
+        if (dataArray.length == 0) {
+          let first_response = 'Nothing found.';
+          this.response_object = {
+            speech: '',
+            displayText: '',
+            data: {
+              expectUserResponse: false
+            },
+            messages: [
+              {
+                type: 0,
+                speech: first_response
+              }
+            ]
+          };
+        } else {
+          for (let i in dataArray) {
+            var search_object = {
+              id: dataArray[i].designation,
+              title: dataArray[i].name,
+              summary: dataArray[i].introduction,
+              publishedBy: dataArray[i].email,
+              type: '',
+              publishedOn: time,
+              likes: '0',
+              views: '',
+              shares: '0'
+            };
+            searchArray.push(search_object);
+          }
+
+          let first_response = 'I found this for you.';
+          this.response_object = {
+            speech: '',
+            displayText: '',
+            data: {
+              expectUserResponse: false
+            },
+            messages: [
+              {
+                type: 0,
+                speech: first_response
+              },
+              {
+                type: 'search_card',
+                results: searchArray
+              }
+            ]
+          };
+        }
+      } else {
+        let response = this.fallbackResponses[
+          this.getRandomInt(0, this.fallbackResponses.length - 1)
+        ];
+        this.response_object = {
+          speech: '',
+          displayText: '',
+          data: {
+            expectUserResponse: false
+          },
+          messages: [
+            {
+              type: 0,
+              speech: response
+            }
+          ]
+        };
+      }
     }
 
     return this.response_object;
