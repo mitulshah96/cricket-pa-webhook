@@ -54,7 +54,7 @@ class Gateway {
           throw new TypeError(`Unknown request initiator: ${config.initiator}`);
         }
       }
-      
+
       if (
         (!!config.url ||
           config.url === '' ||
@@ -70,7 +70,7 @@ class Gateway {
         return config.format;
       }
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
       throw error;
     }
   }
@@ -83,6 +83,7 @@ class Gateway {
           body,
           config.format
         );
+        // console.log(body);
       } else if (config.initiator === 'alexa') {
         const alexa = new Alexa();
         return await alexa[config.callback[config.initiator]](

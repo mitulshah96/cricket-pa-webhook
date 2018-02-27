@@ -23,19 +23,17 @@ class SearchHelper {
     ];
   }
   getSearchObject(body, format) {
-    
-    // const query = body.result.resolvedQuery;
-   
-
     const time = String(body.timestamp);
     let type = '';
     let publishedOn = '';
 
-     console.log(format.data.data.search.profiles.items)
-    if (!!format.data.data.search.profiles.items && format.data.data.search.profiles.items.length > 0) {
-
+    //  console.log(format.data.data.search.profiles.items)
+    if (
+      !!format.data.data.search.profiles.items &&
+      format.data.data.search.profiles.items.length > 0
+    ) {
       let dataArray = format.data.data.search.profiles.items;
-     
+
       var searchArray = [];
 
       if (dataArray.length == 0) {
@@ -55,7 +53,6 @@ class SearchHelper {
         };
       } else {
         for (let i in dataArray) {
- 
           var search_object = {
             id: dataArray[i].designation,
             title: dataArray[i].name,
@@ -112,10 +109,9 @@ class SearchHelper {
   }
 
   getSearchParams(body, querys) {
-   
-    const queryparam = JSON.stringify(body.result.resolvedQuery)
+    const queryparam = JSON.stringify(body.result.resolvedQuery);
     querys.data = {
-      query:`{
+      query: `{
         search(query:${queryparam}){
           pageLength
           profiles {
@@ -134,14 +130,13 @@ class SearchHelper {
           }
         }
       }`
-    }
-    return querys
+    };
+    return querys;
   }
 
   getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-  
 }
 
 module.exports = SearchHelper;

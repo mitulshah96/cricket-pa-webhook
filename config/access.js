@@ -194,8 +194,8 @@ module.exports = {
       //===================================//
 
       news_widget: {
-        url: `https://prioriti.net/aicgateway/googlenews/gfeeds?query=`,
-        method: 'GET',
+        url: 'http://aicstage.accionlabs.com/api/accion',
+        method: 'POST',
         parameters: {
           type: 'params',
           value: {}
@@ -236,18 +236,18 @@ module.exports = {
       // },
       default_fallback_intent: {
         url: 'http://aicstage.accionlabs.com/api/accion',
-        method: "POST",
+        method: 'POST',
         parameters: {
-          type: "params",
+          type: 'params',
           value: {}
         },
         headers: {},
-        
+
         intercept: {
-          dialogflow: "handleSearchParams"
+          dialogflow: 'handleSearchParams'
         },
         callback: {
-          dialogflow: "createSearchObject"
+          dialogflow: 'createSearchObject'
         }
       },
       //===========================================//
