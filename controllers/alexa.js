@@ -95,7 +95,7 @@ class Alexa {
       });
       speech.say("That's all from AIC. Thank You.");
     } else {
-      speech.say("Something went wrong. Please try it again").pause("200ms");
+      speech.say("Sorry we don't have any latest news from AIC").pause("200ms");
     }
     format.response.outputSpeech.ssml = speech.ssml();
     return await format;
@@ -136,7 +136,7 @@ class Alexa {
       });
       speech.say("That's all from Your search result. Thank You.");
     } else {
-      speech.say("Something went wrong. Please try it again").pause("200ms");
+      speech.say("Sorry we didn't found any data").pause("200ms");
     }
     format.response.outputSpeech.ssml = speech.ssml();
     return await format;
