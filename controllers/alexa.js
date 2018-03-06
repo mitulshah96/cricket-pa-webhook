@@ -101,6 +101,38 @@ class Alexa {
     return await format;
   }
 
+  async get_new_match(body,format){
+    const speech = new Speech();
+    if ( !!format.response.outputSpeech.ssml.matches && format.response.outputSpeech.ssml.matches.length > 0){
+      speech.say("The Schedule for latest match are").pause("350ms");
+
+      format.response.outputSpeech.ssml.matches.map((match, i) => {
+        if(i <= 20 && match.matchStarted==false){
+            speech
+            .say(`Match is between`)
+            .pause("100ms")
+            .say(`${match['team-1']}`)
+            .pause("100ms")
+            .say(`and`)
+            .say(`${match['team-2']}`)
+            .pause("100ms")
+            .say(`and is scheduled on`)
+            .pause("200ms")
+            .say(`${moment(match.dateTimeGMT).format("YYYY-MM-DD")}`)
+            .pause("200ms")
+            .say(`Next`)
+         return true;
+        }
+      });
+      speech.say("That's all from latest matches. Thank You.");
+     
+    }else{
+      speech.say("Sorry we don't have any latest match scheduled").pause("200ms");
+    }
+    format.response.outputSpeech.ssml = speech.ssml();
+    return await format;
+  }
+
 
 
   async get_search(body, format) {
@@ -180,6 +212,16 @@ class Alexa {
     };
     return querys;
   }
+
+
+
+  intercept_new_match(body,query){
+    query.headers = {
+     apikey:`PxkSJtJhwZWgVEovi1JXsyimavL2`
+    };
+    return query;
+  }
+
 
   intercept_get_email(body, query, result) {
     emailid = !!result ? result.emailAddress : null;

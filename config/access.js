@@ -5,10 +5,8 @@ const config = envConfig.PA_service.admin[env];
 module.exports = {
   '59d9a2e8695293a55460c4d4': {
     allowed_intents: [
-      // EMAIL
-      'email_widget',
-      'email_intent_yes',
-      'email_intent_no',
+      // MATCHES
+      'new_matches',
       'email_read_cancel',
 
       // CALENDAR
@@ -78,44 +76,21 @@ module.exports = {
       //===================================//
       //============== EMAIL ==============//
       //===================================//
-      email_widget: {
-        urls: [
-          {
-            url: `https://www.googleapis.com/gmail/v1/users/me/profile`,
-            method: 'GET',
-            parameters: {
-              type: 'params',
-              value: {}
-            },
-            direct: true,
-            headers: {},
-            intercept: {
-              alexa: 'intercept_email'
-            },
-            callback: {
-              alexa: 'get_emailaddress_callback'
-            }
-          },
-          {
-            url: `https://prioriti.net/aicgateway/googleemail/default?maxResults=5&labels=INBOX`,
-            method: 'GET',
-            parameters: {
-              type: 'params',
-              value: {}
-            },
-            direct: true,
-            headers: {},
-            intercept: {
-              alexa: 'intercept_get_email',
-              dialogflow: 'handleEmailParams'
-            },
-            callback: {
-              alexa: 'get_emails',
-              dialogflow: 'createEmailObject'
-            }
-            
-          }
-        ]
+      new_matches: {
+        url: `http://cricapi.com/api/matches`,
+        method: 'POST',
+        parameters: {
+          type: 'params',
+          value: {}
+        },
+        headers: {},
+        intercept: {
+          alexa: 'intercept_new_match',
+        },
+        callback: {
+          alexa: 'get_new_match',
+        
+        }
       },
       email_intent_yes: {
         callback: {

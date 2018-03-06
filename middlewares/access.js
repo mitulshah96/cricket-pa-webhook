@@ -5,6 +5,7 @@ const Gateway = require('../controllers/gateway');
 async function handleAccess(req, res, next) {
   if (req.headers['x-requested-from'] !== 'apiai') {
     req.intentName = req.body.request.intent.name;
+   
     Object.keys(accessconfig).map(key => {
       req.config = accessconfig[key].intents[req.intentName];
       req.config.initiator = 'alexa';
