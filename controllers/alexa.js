@@ -6,101 +6,6 @@ var emailid;
 class Alexa {
   constructor() {}
 
-  async get_emails(body, format) {
-    const speech = new Speech();
-    if (
-      format.response.outputSpeech.ssml.messages &&
-      format.response.outputSpeech.ssml.messages.length > 0
-    ) {
-      speech.say("This is what show up in your mail").pause("200ms");
-
-      format.response.outputSpeech.ssml.messages.map((email, i) => {
-        speech
-          .say(i + 1)
-          .pause("200ms")
-          .say("subject is")
-          .say(email.subject)
-          .pause("50ms")
-          .say("email sent from " + email.from.emailAddress.name)
-          .pause("50ms")
-          .say("preview of mail is")
-          .pause("50ms")
-          .say(email.snippet)
-          .pause("800ms");
-      });
-
-      speech.say("Thank You.");
-    } else {
-      speech.say("You have no emails").pause("200ms");
-    }
-
-    format.response.outputSpeech.ssml = speech.ssml();
-
-    return await format;
-  }
-
-  async get_events(body, format) {
-    const speech = new Speech();
-    if (
-      format.response.outputSpeech.ssml.items &&
-      format.response.outputSpeech.ssml.items.length > 0
-    ) {
-      speech.say("Your events are").pause("350ms");
-
-      format.response.outputSpeech.ssml.items.map((event, i) => {
-        speech
-          .say(`${i + 1}.`)
-          .pause("50ms")
-          .say(
-            `Event is on ${event.summary} and is scheduled on ${moment(
-              event.start.dateTime
-            ).format("YYYY-MM-DD")} which is organized by ${
-              event.organizer.displayName
-            } and ends on ${moment(event.end.dateTime).format("YYYY-MM-DD")}`
-          )
-          .pause("800ms");
-      });
-
-      speech.say("Thank You.");
-    } else {
-      speech.say("No event is scheduled").pause("200ms");
-    }
-
-    format.response.outputSpeech.ssml = speech.ssml();
-
-    return await format;
-  }
-
-  async get_news(body, format) {
-    const speech = new Speech();
-
-    if (
-      !!format.response.outputSpeech.ssml.data.demos.items &&
-      format.response.outputSpeech.ssml.data.demos.items.length > 0
-    ) {
-      speech.say("This is what trending in AIC").pause("350ms");
-
-      format.response.outputSpeech.ssml.data.demos.items.map((news, i) => {
-        speech
-          .say(`${i + 1}.`)
-          .pause("50ms")
-          .say(`${news.title}`)
-          .pause("100ms")
-          .say(`summary is`)
-          .say(`${news.tagline}`)
-          .pause("200ms")
-          .say(`description is`)
-          .say(`${news.description}`)
-          .pause("800ms");
-      });
-      speech.say("That's all from AIC. Thank You.");
-    } else {
-      speech.say("Sorry we don't have any latest news from AIC").pause("200ms");
-    }
-    format.response.outputSpeech.ssml = speech.ssml();
-    return await format;
-  }
-
   async get_new_match(body,format){
     const speech = new Speech();
     if ( !!format.response.outputSpeech.ssml.matches && format.response.outputSpeech.ssml.matches.length > 0){
@@ -133,87 +38,64 @@ class Alexa {
     return await format;
   }
 
-
-
-  async get_search(body, format) {
+  async get_match_calendar(body,format){
     const speech = new Speech();
-
-    if (
-      !!format.response.outputSpeech.ssml.data.search.profiles.items &&
-      format.response.outputSpeech.ssml.data.search.profiles.items.length > 0
-    ) {
-      speech.say("Your Search result are").pause("350ms");
-
-      format.response.outputSpeech.ssml.data.search.profiles.items.map((searches, i) => {
-        speech
-          .say(`${i + 1}.`)
-          .pause("50ms")
-          .say(`${searches.name}`)
-          .pause("100ms")
-          .say(`designation is`)
-          .say(`${searches.designation}`)
-          .pause("200ms")
-          .say("a quick introduction is")
-          .pause("200ms")
-          .say(`${searches.introduction}`)  
-          .pause("200ms")
-          .say(`location is`)
-          .say(`${searches.location}`)
-          .pause("200ms")
-          .say("and email is")
-          .say(`${searches.email}`) 
-          .pause("800ms") 
-        
-        
+    
+    if ( !!format.response.outputSpeech.ssml.data && format.response.outputSpeech.ssml.data.length > 0){
+      speech.say("The Schedule for match according to calendar is").pause("350ms");
+     
+      format.response.outputSpeech.ssml.data.map((match, i) => { 
+        if(i <= 20){
+            speech
+            .say(`Match is between`)
+            .pause("100ms")
+            .say(`${match['name']}`)
+            .pause("100ms")
+            .say(`and is scheduled on`)
+            .pause("200ms")
+            .say(`${match.date}`)
+            .pause("200ms")
+            .say(`Next`)
+            .pause("1ms")
+         return true;
+        }
       });
-      speech.say("That's all from Your search result. Thank You.");
-    } else {
-      speech.say("Sorry we didn't found any data").pause("200ms");
+      speech.say("That's all from match calendar. Thank You.");
+     
+    }else{
+      speech.say("Sorry we don't have any match scheduled").pause("200ms");
     }
     format.response.outputSpeech.ssml = speech.ssml();
     return await format;
   }
 
+  async get_match_statistics(body,format){
 
-
-
-  async get_emailaddress_callback(body, format) {
-    return format;
+    const speech = new Speech();
+  
+      speech.say("The Player statistics for").pause("350ms");
+            speech
+            .say(`${format.response.outputSpeech.ssml.name}`)
+            .pause("100ms")
+            .say(`is`)
+            .pause("100ms")
+            .say(`${format.response.outputSpeech.ssml.playingRole}`)
+            .pause("100ms")
+            if(format.response.outputSpeech.ssml.profile){
+              speech.say(`${format.response.outputSpeech.ssml.profile}`)
+              speech.pause("100ms")
+            }  
+            speech.say(`its current age is`)
+            .say(`${format.response.outputSpeech.ssml.currentAge}`)
+            .pause("100ms")
+            .say(`and is born on`)
+            .pause("200ms")
+            .say(`${format.response.outputSpeech.ssml.born}`)
+            .pause("200ms")
+      speech.say("That's all from statistics of a player. Thank You.");
+    format.response.outputSpeech.ssml = speech.ssml();
+    return await format;
   }
-
-  intercept_email(body, query) {
-    query.headers = {
-      authorization: `Bearer ${body.session.user.accessToken}`
-    };
-    return query;
-  }
-
-  intercept_news(body, querys) {
-    querys.data = {
-      query: `{ 
-				demos(
-					pageOffset: 0, 
-					pageLength: 5,
-				)
-				{ 
-					total,
-					items {
-						id, 
-						title, 
-						tagline, 
-						authors, 
-						embedUrl, 
-						description, 
-						thumbnail, 
-						_firstCreatedTimestamp
-					} 
-				} 
-			}`
-    };
-    return querys;
-  }
-
-
 
   intercept_new_match(body,query){
     query.headers = {
@@ -222,78 +104,21 @@ class Alexa {
     return query;
   }
 
-
-  intercept_get_email(body, query, result) {
-    emailid = !!result ? result.emailAddress : null;
+  intercept_match_calendar(body,query){
     query.headers = {
-      token: `${body.session.user.accessToken}`,
-      "refresh-token": `1/YlCPIhL_0oOO7a0QF2CUwZTw71d98YXICOdnWnE7-Et4tMOcF2VoSAUpSIJ6WWi7`,
-      alexa: `true`,
-      email: emailid
-    };
-    return query;
+      apikey:`PxkSJtJhwZWgVEovi1JXsyimavL2`
+     };
+     return query;
   }
 
-  intercept_get_calendar(body, query, result) {
-    let date;
-    emailid = !!result ? result.emailAddress : null;
-
-    if (
-      !!body.request.intent.slots.today.hasOwnProperty("value") &&
-      body.request.intent.slots.today.hasOwnProperty("value")
-    ) {
-      date = body.request.intent.slots.today.value;
-    } else {
-      date = new Date();
-      date = date
-        .toISOString()
-        .slice(0, 10)
-        .replace(/-/g, "-");
-    }
-    date = moment.utc(date).format();
-
-    query.url = `${query.url}&timeMin=${date}`;
-    query.headers = {
-      token: `${body.session.user.accessToken}`,
-      "refresh-token": `1/YlCPIhL_0oOO7a0QF2CUwZTw71d98YXICOdnWnE7-Et4tMOcF2VoSAUpSIJ6WWi7`,
-      alexa: `true`,
-      email: emailid
-    };
-    return query;
-  }
-
-  intercept_emails(body, query) {
-    query.headers = {
-      "x-mail-token": `${body.session.user.accessToken}`,
-      "x-mail-server": "Microsoft"
-    };
-    return query;
-  }
-
-  intercept_search(body,querys){
-    const queryparam = JSON.stringify(body.request.intent.slots.query.value)
-    querys.data = {
-      query:`{
-        search(query:${queryparam}){
-          pageLength
-          profiles {
-            pageOffset
-            pageLength
-            total
-            items {
-              id
-              name
-              email
-              location
-              introduction
-              designation
-              aiclevel
-            }
-          }
-        }
-      }`
-    }
-    return querys
+  intercept_player_statistics(body,query){
+     query.headers={
+      apikey:`PxkSJtJhwZWgVEovi1JXsyimavL2`,
+     }
+     query.data={
+       pid:`35320`
+     }
+     return query;
   }
 
 }
