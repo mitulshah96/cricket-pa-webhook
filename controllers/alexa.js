@@ -38,6 +38,15 @@ class Alexa {
     return await format;
   }
 
+  async get_launch_request(body,format){
+    const speech = new Speech();
+    speech.say("Welcome to Cricket Info App ")
+          .pause(`50ms`)
+          .say(`Here you can get news on upcoming matches,player statistics and  match calendar`)
+    format.response.outputSpeech.ssml = speech.ssml();
+    return await format;       
+  }
+
   async get_match_calendar(body,format){
     const speech = new Speech();
     

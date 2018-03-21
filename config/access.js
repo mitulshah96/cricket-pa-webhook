@@ -9,6 +9,10 @@ module.exports = {
       'new_matches',
       'match_calendar',
       'player_statistics',
+      'AMAZON.StopIntent',
+      'AMAZON.HelpIntent',
+     ' AMAZON.CancelIntent',
+     'LaunchRequest'
     ],
     intents: {
       //================================================================================//
@@ -31,6 +35,12 @@ module.exports = {
         callback: {
           alexa: 'get_new_match',
         
+        }
+      },
+
+      LaunchRequest:{
+        callback:{
+          alexa:'get_launch_request'
         }
       },
 
