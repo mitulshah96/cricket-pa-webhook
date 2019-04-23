@@ -370,7 +370,7 @@ class AicHelper {
             'Jul 2014\n – Acquires stake in Service-berry and establishes ITSM capabilities',
             'Aug 2014\n– Accion was awarded as Pittsburgh’s fastest growing tech services firm (#1 tech services, #3 overall)',
             'Sept 2015\n– Opens Goa office through acquisition of Parinati Solutions',
-            'For more detailed story, visit\nhttp://accionlabs.com/company/the-accion-story/'
+            'For more detailed story, visit\n'
           ]
         }
       ]
@@ -635,7 +635,7 @@ class AicHelper {
             {
               name: 'tori',
               desc:
-                'TORI Global is a management consulting firm and are also trusted advisors to the world’s leading financial services companies. To deliver end-to-end digital realisation we have combined the advisory services of TORI Global with the development skills of Accionlabs.',
+                'TORI Global is a management consulting firm and are also trusted advisors to the world’s leading financial services companies. To deliver end-to-end digital realisation we have combined the advisory services of TORI Global with the development skills of .',
               imageUrl: ''
             }
           ]
@@ -706,7 +706,7 @@ class AicHelper {
         {
           type: 0,
           speech:
-            'In addition to the great learning environment, Accionlabs has a vibrant corporate social responsibility (CSR)'
+            'In addition to the great learning environment,  has a vibrant corporate social responsibility (CSR)'
         },
         {
           type: 'social_card',
