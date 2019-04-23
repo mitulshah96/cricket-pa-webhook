@@ -130,56 +130,47 @@ class AicHelper {
             {
               name: 'Web Application Development',
               desc: '',
-              imageUrl:
-                'http://accionlabs.com/images/solutions/ui-development-solutions.png'
+              imageUrl: ''
             },
             {
               name: 'Cloud Computing Solutions',
               desc: '',
-              imageUrl:
-                'http://accionlabs.com/images/solutions/cloud-computing-solutions.png'
+              imageUrl: ''
             },
             {
               name: 'Mobile Application Development',
               desc: '',
-              imageUrl:
-                'http://accionlabs.com/images/solutions/mobile-application-development.png'
+              imageUrl: ''
             },
             {
               name: 'Product Engineering and Development',
               desc: '',
-              imageUrl:
-                'http://accionlabs.com/images/solutions/product-engeneering1-Custom-Custom.png'
+              imageUrl: ''
             },
             {
               name: 'Big Data Consulting And Implementation Solutions',
               desc: '',
-              imageUrl:
-                'http://accionlabs.com/images/solutions/big-data-slide-Custom-Custom.png'
+              imageUrl: ''
             },
             {
               name: 'Business Intelligence & Analytics Solutions',
               desc: '',
-              imageUrl:
-                'http://accionlabs.com/images/solutions/data-solution1-Custom-Custom.png'
+              imageUrl: ''
             },
             {
               name: 'Open Source Solutions',
               desc: '',
-              imageUrl:
-                'http://accionlabs.com/images/solutions/Open_source-405x295-Custom.png'
+              imageUrl: ''
             },
             {
               name: 'QA & Automation Solutions',
               desc: '',
-              imageUrl:
-                'http://accionlabs.com/images/solutions/Services-to-Start-up-and-Early-Stage-Firmsopt2-Custom.png'
+              imageUrl: ''
             },
             {
               name: 'IT Service Management Solutions',
               desc: '',
-              imageUrl:
-                'http://accionlabs.com/images/solutions/Cloud_computing-400x295-Custom.png'
+              imageUrl: ''
             }
           ]
         }
@@ -206,20 +197,17 @@ class AicHelper {
             {
               name: 'Services For Growth Stage Tech Firms',
               desc: '',
-              imageUrl:
-                'http://accionlabs.com/images/services/matured-450x295-Custom.png'
+              imageUrl: ''
             },
             {
               name: 'Services To Matured Technology Organizations',
               desc: '',
-              imageUrl:
-                'http://accionlabs.com/images/services/Services-For-Growth-Custom.png'
+              imageUrl: ''
             },
             {
               name: 'For Start-Up And Early Stage Firms',
               desc: '',
-              imageUrl:
-                'http://accionlabs.com/images/services/startup_earlystage-453x295-Custom.png'
+              imageUrl: ''
             }
           ]
         }
@@ -259,7 +247,7 @@ class AicHelper {
       messages: [
         {
           type: 0,
-          speech: 'Thank you for contacting AccionLabs'
+          speech: 'Thank you for contacting '
         },
         {
           type: 'contact',
@@ -606,52 +594,49 @@ class AicHelper {
               name: 'KONY',
               desc:
                 'Kony is a cloud based mobile application development platform. Kony allows businesses to design, develop, deploy and manage multiple applications from a single platform. Kony has been popular with developers that work on native mobile and web apps.',
-              imageUrl: 'http://accionlabs.com/images/Kony_Logo_Apr_2016.png'
+              imageUrl: ''
             },
             {
               name: 'DOCKER',
               desc:
                 'Docker is a container as a service platform that helps DevOps teams build, ship and run applications from anywhere. It does this by allowing teams to create applications from micro services without any concerns for variability between the production and development environment of applications',
-              imageUrl: 'http://accionlabs.com/images/docker.png'
+              imageUrl: ''
             },
             {
               name: 'CHEF',
               desc:
                 'Chef is an automation platform that converts complex infrastructure into code and thus brings it to life. Chef automates the way applications are deployed, configured and managed throughout the network.',
-              imageUrl:
-                'http://accionlabs.com/images/Chef_Software_Inc._company_logo.png'
+              imageUrl: ''
             },
             {
               name: 'HORTONWORKS',
               desc:
                 'Hortonworks is a software firm that focuses on open source Apache Hadoop. Hortonworks is known for its open source Data Platform, which is propelled by Apache Hadoop. The platform focuses on integrating existing data architectures to Apache Hadoop.',
-              imageUrl: 'http://accionlabs.com/images/HortonWorks.png'
+              imageUrl: ''
             },
             {
               name: 'MariaDB',
               desc:
                 'MariaDB is one of the world’s most popular open source relational database. It is founded by the original creators of MySQL. MariaDB makes storage and querying from the database easy. Moreover, MariaDB also provides dynamic column support.',
-              imageUrl:
-                'http://accionlabs.com/images/MariaDB-sea_lion_copyright_blue_text.png'
+              imageUrl: ''
             },
             {
               name: 'mongoDB',
               desc:
                 'MongoDB is a No SQL document oriented database. The database is created using a collection of documents. Each collection contains multiple sets of documents that function as an equivalent of relational database tables. ',
-              imageUrl:
-                'http://accionlabs.com/images/MongoDB_Gray_Logo_FullColor_RGB-01.png'
+              imageUrl: ''
             },
             {
               name: 'calm.io',
               desc:
                 'Calm.io is an automation platform designed to manage modern data center environments such as hybrid-cloud infrastructures and micro service architectures. Calm.io can also work with existing workflow and configuration management tools as AWS and Azure.',
-              imageUrl: 'http://accionlabs.com/images/calm_logo_rgb-copy.png'
+              imageUrl: ''
             },
             {
               name: 'tori',
               desc:
                 'TORI Global is a management consulting firm and are also trusted advisors to the world’s leading financial services companies. To deliver end-to-end digital realisation we have combined the advisory services of TORI Global with the development skills of Accionlabs.',
-              imageUrl: 'http://accionlabs.com/images/tori_logo.png'
+              imageUrl: ''
             }
           ]
         }
@@ -728,43 +713,19 @@ class AicHelper {
           albums: [
             {
               title: 'Gift Giving Program For Underprivileged Children',
-              images: [
-                'http://accionlabs.com/images/company/WAF2_thumbnail.jpg',
-                'http://accionlabs.com/images/company/WAF4_thumbnail.jpg',
-                'http://accionlabs.com/images/company/WAF5_thumbnail.jpg',
-                'http://accionlabs.com/images/company/WAF6_thumbnail.jpg',
-                'http://accionlabs.com/images/company/WAF8_thumbnail.jpg',
-                'http://accionlabs.com/images/company/WAF9_thumbnail.jpg'
-              ]
+              images: ['', '']
             },
             {
               title: 'Relief Material For Chennai Floods',
-              images: [
-                'http://accionlabs.com/images/src/1.jpg',
-                'http://accionlabs.com/images/src/2.jpg',
-                'http://accionlabs.com/images/src/3.jpg',
-                'http://accionlabs.com/images/src/4.jpg'
-              ]
+              images: ['']
             },
             {
               title: 'Blood Donation Camp',
-              images: [
-                'http://accionlabs.com/images/src/5.jpg',
-                'http://accionlabs.com/images/src/6.jpg',
-                'http://accionlabs.com/images/src/7.jpg',
-                'http://accionlabs.com/images/src/8.jpg'
-              ]
+              images: []
             },
             {
               title: 'Contributions For Interactive Learning Solutions',
-              images: [
-                'http://accionlabs.com/images/src/9.jpg',
-                'http://accionlabs.com/images/src/10.jpg',
-                'http://accionlabs.com/images/src/11.jpg',
-                'http://accionlabs.com/images/src/12.jpg',
-                'http://accionlabs.com/images/src/13.jpg',
-                'http://accionlabs.com/images/src/14.jpg'
-              ]
+              images: []
             }
           ]
         }
